@@ -159,7 +159,7 @@
                                         $s_q [] = $delta[$j][1];
             
                                         foreach($final_state as $fq){
-                                            if($delta[$j][1] == $fq && (substr($input,($i+1),1) == " " || $i == strlen($input) - 2 || substr($input,($i+1),1) == "." || substr($input,($i+1),1) == "-" || substr($input,($i+1),1) == chr(10))){
+                                            if($delta[$j][1] == $fq && (substr($input,($i+1),1) == " " || $i == strlen($input) - 2 || substr($input,($i+1),1) == "." || substr($input,($i+1),1) == "," || substr($input,($i+1),1) == "-" || substr($input,($i+1),1) == chr(10))){
                                                 $accepted = TRUE;
                                             }
                                         }
