@@ -1,0 +1,102 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package dfa;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author User
+ */
+public class Dfa {
+    static int hasil,finalstate;
+    static String[] simbol={"0","1"};//simbol yang bisa diterima
+    static int[][] table_transisi_L1={{0,1},//delta(q0,0)=q0 dan delta(q0,1)=q1
+                                      {2,1},//delta(q1,0)=q2 dan delta(q1,1)=q1
+                                      {0,3},//delta(q2,0)=q0 dan delta(q2,1)=q3
+                                      {3,3}};//delta(q3,0)=q3 dan delta(q3,1)=q3
+    static int[][] table_transisi_L2={{4,1},//delta(q0,0)=q4 dan delta(q0,1)=q1
+                                      {2,4},//delta(q1,0)=q2 dan delta(q1,1)=q4
+                                      {4,3},//delta(q2,0)=q4 dan delta(q2,1)=q3
+                                      {3,3},//delta(q3,0)=q3 dan delta(q3,1)=q3
+                                      {4,4}};//delta(q4,0)=q4 dan delta(q4,1)=q4
+    static int[][] table_transisi_L3={{0,1},//delta(q0,0)=q0 dan delta(q0,1)=q1
+                                      {2,1},//delta(q1,0)=q2 dan delta(q1,1)=q1
+                                      {0,3},//delta(q2,0)=q0 dan delta(q2,1)=q3
+                                      {2,1}};//delta(q3,0)=q2 dan delta(q3,1)=q1
+    static int[][] table_transisi_L4={{1,0},//delta(q0,0)=q1 dan delta(q0,1)=q0
+                                      {0,1}};//delta(q1,0)=q0 dan delta(q1,1)=q1
+    static int[][] table_transisi_L5={{0,1},//delta(q0,0)=q0 dan delta(q0,1)=q1
+                                      {1,0}};//delta(q1,0)=q1 dan delta(q1,1)=q0
+    static int deltatopi(int state,String input,int[][] arr){
+        int length=input.length();
+        String stringawal=input.substring(0,length-1);//string dari awal sampai length-1
+        String stringakhir=input.substring(length-1,length);//string simbol terakhir
+        if(length>1){//jika panjang stringnya masih lebih dari 1
+                     //panggil lagi method deltatopi
+            state=deltatopi(state,stringawal,arr);
+        }
+        return delta(state,stringakhir,arr);
+    }
+    static int search(String[] arr, String value){//cari apakah string ada di array simbol
+        for (int i=0;i<arr.length;i++) {
+            if (arr[i].equals(value)) {
+                return i;//jika ada return indeksnya
+            }
+        }
+        return -1;//jika tidak return -1
+    }
+    static int delta(int state,String input,int[][] arr){
+        int kolom=search(simbol,input);//cari stringnya di array simbol
+        if(kolom!=-1){//jika ada
+            return arr[state][kolom];//return hasil deltanya
+        }
+        return -1;//jika tidak return -1
+    }
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        Scanner scan=new Scanner(System.in);
+        System.out.print("Input String : ");
+        String input=scan.nextLine();
+        System.out.println("1. Semua String yang mengandung substring 101");
+        System.out.println("2. Semua String yang mengandung prefiks 101");
+        System.out.println("3. Semua String yang mengandung sufiks 101");
+        System.out.println("4. Semua String yang mengandung jumlah simbol 0 genap");
+        System.out.println("5. Semua String yang mengandung jumlah simbol 1 ganjil");
+        System.out.print("Pilihan : ");
+        int pil=scan.nextInt();
+        switch(pil){
+            case 1:
+                hasil=deltatopi(0,input,table_transisi_L1);
+                finalstate=3;//final state di q3
+                break;
+            case 2:
+                hasil=deltatopi(0,input,table_transisi_L2);
+                finalstate=3;//final state di q3
+                break;
+            case 3:
+                hasil=deltatopi(0,input,table_transisi_L3);
+                finalstate=3;//final state di q3
+                break;
+            case 4:
+                hasil=deltatopi(0,input,table_transisi_L4);
+                finalstate=0;//final state di q0
+                break;
+            case 5:
+                hasil=deltatopi(0,input,table_transisi_L5);
+                finalstate=1;//final state di q1
+                break;
+        }
+        if(hasil==finalstate){
+            System.out.println("Inputan Valid");
+        }else{
+            System.out.println("Inputan Tidak Valid");
+        }
+    }
+}
