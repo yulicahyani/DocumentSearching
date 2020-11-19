@@ -201,7 +201,7 @@
                                     //echo "<br>".print_r($delta[$j]);
         
                                     foreach($final_state as $fq){
-                                        if($delta[$j][1] == $fq && (substr($input,($i+1),1) == " " || $i == strlen($input) - 2 || substr($input,($i+1),1) == "." || substr($input,($i+1),1) == "-" || substr($input,($i+1),1) == chr(10))){
+                                        if($delta[$j][1] == $fq && (substr($input,($i+1),1) == " " || $i == strlen($input) - 2 || substr($input,($i+1),1) == "." || substr($input,($i+1),1) == "," || substr($input,($i+1),1) == "-" || substr($input,($i+1),1) == chr(10))){
                                             $accepted = TRUE;
                                         }
                                     }
@@ -301,13 +301,6 @@
        
         <?php
         }
-
-
-            // hasil Pengujian
-            // $jml_file_yg_ditampilkan = $nomor;
-            // $jml_file_yg_true_accepted = 20;
-            // $hasil_uji = round($jml_file_yg_true_accepted/$jml_file_yg_ditampilkan*100,2);
-            // echo "<br><br>hasil uji = ".$hasil_uji." %";
         ?>
          
 
